@@ -39,6 +39,10 @@
       }
     ],
 
+    "engines": {
+      "node": "18.16.0"
+    },
+
   "keywords": [],
   "author": "Achraf",
   "license": "ISC"
