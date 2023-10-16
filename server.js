@@ -30,7 +30,8 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+//app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+app.use("/Images", express.static(path.join(__dirname, "public/Images")));
 
 app.use(cors({
   origin: "*",
@@ -40,17 +41,33 @@ app.use(cors({
 /*FILE STORAGE*/
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/assets");
+    cb(null, "public/Images");
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
 });
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
 /*POST ROUTES WITH FILES*/
-app.post("/API/auth/register", upload.single("picture"), registerRules(), validator, register);
-app.post("/API/posts/", upload.single("picture"), verifyToken, createPost);
+app.post("/API/auth/register", upload.single("image"), registerRules(), validator, register);
+app.post("/API/posts/", upload.single("image"), verifyToken, createPost);
+
+// /*FILE STORAGE*/
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "public/assets");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//   },
+// });
+// const upload = multer({ storage });
+
+// /*POST ROUTES WITH FILES*/
+// app.post("/API/auth/register", upload.single("picture"), registerRules(), validator, register);
+// app.post("/API/posts/", upload.single("picture"), verifyToken, createPost);
+
 
 /*ROUTES*/
 app.use("/API/auth", loginRoutes);
