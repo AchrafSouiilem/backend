@@ -44,16 +44,15 @@ const storage = multer.diskStorage({
     cb(null, "public/Images");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    console.log(file)
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 const upload = multer({ storage: storage });
 
 // /*POST ROUTES WITH FILES*/
 app.post("/API/auth/register", registerRules(), validator, register);
-app.post("/upload", upload.single("image"), (req, res) => {
-  console.log(req.file)
-})
+app.post("/upload", upload.single("image"))
 app.post("/API/posts/", upload.single("image"), verifyToken, createPost);
 
 // /*POST ROUTES WITH FILES*/
