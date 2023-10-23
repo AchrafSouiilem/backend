@@ -50,8 +50,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // /*POST ROUTES WITH FILES*/
-app.post("/API/auth/register", registerRules(), validator, register);
-app.post("/upload", upload.single("image"))
+app.post("/API/auth/register", upload.single("image"), registerRules(), validator, register);
 app.post("/API/posts/", upload.single("image"), verifyToken, createPost);
 
 // /*POST ROUTES WITH FILES*/
